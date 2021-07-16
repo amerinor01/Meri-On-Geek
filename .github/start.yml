@@ -1,0 +1,39 @@
+on:
+  schedule:
+    - cron:  '0 7 * * 1,4'
+    # scheduled at 07:00 every Monday and Thursday
+  workflow_dispatch:
+    # for manual builds
+
+jobs:
+  build_and_deploy_hugo_site:
+    runs-on: ubuntu-latest
+    name: Build and deploy Hugo site
+
+    steps:
+     # Step 1: checkout your project repo
+    - name: Checkout repo with submodules (theme and public-sub)
+      uses: actions/checkout@v2
+      with:
+        token: ${{ secrets.YOUR_SSECRET_HERE }}
+        submodules: 'recursive'
+    
+     # Step 2: Install Hugo
+    - name: Install Hugo
+      uses: peaceiris/actions-hugo@v2
+      with:
+        hugo-version: '0.74.3'  # your Hugo version here
+    
+     # Step 3: Build and deploy with this action
+    - name: Build Hugo site and deploy
+      uses: aormsby/hugo-deploy-to-pages@v2
+      with:
+        hugo_publish_directory: 'public'
+        source_branch: 'main'
+        deploy_branch: 'live'
+        commit_message: 'I like big builds, and I cannot lie.'
+        
+     # Step 4: a handy timestamp printout, just because
+    - name: Timestamp
+      run: date
+          echo test, and deploy your project.
