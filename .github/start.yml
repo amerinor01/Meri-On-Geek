@@ -29,7 +29,7 @@ jobs:
       uses: aormsby/hugo-deploy-to-pages@v2
       with:
         hugo_publish_directory: 'public'
-        source_branch: 'main'
+        source_branch: 'master'
         deploy_branch: 'live'
         commit_message: 'I like big builds, and I cannot lie.'
         
